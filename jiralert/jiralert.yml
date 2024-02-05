@@ -1,0 +1,62 @@
+---
+# Global defaults, applied to all receivers where not explicitly overridden. Optional.
+defaults:
+  # API access fields.
+  api_url: https://atxdefense.atlassian.net
+  user: singh.rahul.1603@gmail.com
+  password: 'ATATT3xFfGF0c_eDUL7t0knjVkNdkLNFiAxDWGBleTLFTZHwu6677kVbYNEIo9tmtCrlUq0OMqn_nz8Mbktq-Ofwl_EUV6H4dxQPGO0fK593fnuPnzNFr-3-HOPApzPeMUQYhCjuFapZD2jSgdyX-csSa-8lr4f1UbiPFcqsLvqI_kiuWeQK9cQ=F02CF8B4'
+  # Alternatively to user and password use a Personal Access Token
+  # personal_access_token: "Your Personal Access Token". See https://confluence.atlassian.com/enterprise/using-personal-access-tokens-1026032365.html
+
+  # The type of JIRA issue to create. Required.
+  issue_type: Task
+  # Issue priority. Optional.
+  priority: Low
+  # Go template invocation for generating the summary. Required.
+  summary: '{{ template "jira.summary" . }}'
+  # Go template invocation for generating the description. Optional.
+  description: '{{ template "jira.description" . }}'
+  # State to transition into when reopening a closed issue. Required.
+  reopen_state: "To Do"
+  # Do not reopen issues with this resolution. Optional.
+  wont_fix_resolution: "Won't Fix"
+  # Amount of time after being closed that an issue should be reopened, after which, a new issue is created.
+  # Optional (default: always reopen)
+  reopen_duration: 0h
+  # Static label that will be added to the JIRA ticket alongisde the JIRALERT{...} or ALERT{...} label
+  static_labels: ["custom"]
+
+# Receiver definitions. At least one must be defined.
+receivers:
+    # Must match the Alertmanager receiver name. Required.
+  - name: 'jiralert'
+    # JIRA project to create the issue in. Required.
+    project: CST
+    # Copy all Prometheus labels into separate JIRA labels. Optional (default: false).
+    add_group_labels: false
+    # Will be merged with the static_labels from the default map
+    static_labels: ["anotherLabel"]
+
+  - name: 'jira-xy'
+    project: XY
+    # Overrides default.
+    issue_type: Task
+    # JIRA components. Optional.
+    components: ['Operations']
+    # Standard or custom field values to set on created issue. Optional.
+    #
+    # See https://developer.atlassian.com/server/jira/platform/jira-rest-api-examples/#setting-custom-field-data-for-other-field-types for further examples.
+    fields:
+      # TextField
+      customfield_10001: "Random text"
+      # SelectList
+      customfield_10002: {"value": "red"}
+      # MultiSelect
+      customfield_10003: [{"value": "red"}, {"value": "blue"}, {"value": "green"}]
+    #
+    # Automatically resolve jira issues when alert is resolved. Optional. If declared, ensure state is not an empty string.
+    auto_resolve:
+      state: 'Done' 
+
+# File containing template definitions. Required.
+template: jiralert.tmpl
