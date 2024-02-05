@@ -1,11 +1,24 @@
+global:
+  resolve_timeout: 5m
+
 route:
-    receiver: 'slack'
+  group_wait: 10s
+  receiver: 'mattermost'
+  routes:
+    - receiver: 'mattermost'
+      continue: true
+
+    - receiver: 'jiralert'
+      continue: true
+
 
 receivers:
-    - name: 'slack'
-      slack_configs:
-          - send_resolved: true
-            text: "{{ .CommonAnnotations.description }}"
-            username: 'Prometheus'
-            channel: '#<channel-name>'
-            api_url: 'https://hooks.slack.com/services/<webhook-id>'
+  - name: 'mattermost'
+    webhook_configs:
+      - send_resolved: true
+        url: "https://comm.cmmc.space/plugins/alertmanager/api/webhook?token='DQiJSp2wN6KsZy5j6z03o1OxBtgiKWjh'"
+
+  - name: 'jiralert'
+    webhook_configs:
+      - send_resolved: true
+        url: 'http://jiralert:9097/alert'
