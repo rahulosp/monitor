@@ -74,3 +74,15 @@ services:
     networks:
       - monitor-net
 
+  jiralert:
+    image: rahulosp/jiralert:vJan24
+    container_name: jiralert
+    volumes:
+      - ./jiralert:/config
+    command:
+      - '--config=/config/jiralert.yml'
+    restart: unless-stopped
+    ports:
+      - '9097:9097'
+    networks:
+      - monitor-net
