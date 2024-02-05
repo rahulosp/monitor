@@ -4,7 +4,7 @@ defaults:
   # API access fields.
   api_url: https://atxdefense.atlassian.net
   user: singh.rahul.1603@gmail.com
-  password: 'ATATT3xFfGF0c_eDUL7t0knjVkNdkLNFiAxDWGBleTLFTZHwu6677kVbYNEIo9tmtCrlUq0OMqn_nz8Mbktq-Ofwl_EUV6H4dxQPGO0fK593fnuPnzNFr-3-HOPApzPeMUQYhCjuFapZD2jSgdyX-csSa-8lr4f1UbiPFcqsLvqI_kiuWeQK9cQ=F02CF8B4'
+  password: 'random API token pasword'
   # Alternatively to user and password use a Personal Access Token
   # personal_access_token: "Your Personal Access Token". See https://confluence.atlassian.com/enterprise/using-personal-access-tokens-1026032365.html
 
